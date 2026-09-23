@@ -16,64 +16,64 @@ These files aren't in the repo yet at this point (`01_load_data.py` etc. all bel
 ```
 Goal: Load the FashionMNIST dataset and split it into training, validation and test sets, as the first step of building an image classifier.
 Context: This is for a PyTorch image-classification exercise (FashionMNIST). Use torchvision.datasets.FashionMNIST with root="datasets", download=True, and a transform pipeline that converts images to float32 tensors scaled to [0,1] (torchvision.transforms.v2: ToImage() then ToDtype(torch.float32, scale=True)). Split the 60,000-image training set into 55,000 for training and 5,000 for validation using torch.utils.data.random_split with torch.manual_seed(42) set immediately before the split. Keep the 10,000-image test set separate, untouched.
-Constraints: Save this as 01_load_data.py in the repo root. Print the resulting sizes of all three sets.
-Done when: the script runs cleanly and prints 55,000 / 5,000 / 10,000.
+Constraints: Save this as 01_load_data.py in the repo root. Print the resulting sizes of all three sets. Commit and push it to the current branch when done.
+Done when: the script runs cleanly and prints 55,000 / 5,000 / 10,000, and the commit is pushed.
 ```
 
 **Request 2**
 ```
 Goal: Wrap the three datasets from the previous step in DataLoaders.
 Context: batch size 32 for all three; shuffle only the training loader, with torch.manual_seed(42) set immediately before creating it.
-Constraints: save as 02_data_loaders.py.
-Done when: it runs and prints the batch counts for each loader.
+Constraints: save as 02_data_loaders.py. Commit and push it to the current branch when done.
+Done when: it runs and prints the batch counts for each loader, and the commit is pushed.
 ```
 
 **Request 3**
 ```
 Goal: Inspect one training sample.
 Context: print its tensor shape, dtype, and class name (FashionMNIST's dataset object exposes a .classes list of the 10 category names).
-Constraints: save as 03_inspect_sample.py.
-Done when: it prints a shape of [1, 28, 28], dtype float32, and a valid class name.
+Constraints: save as 03_inspect_sample.py. Commit and push it to the current branch when done.
+Done when: it prints a shape of [1, 28, 28], dtype float32, and a valid class name, and the commit is pushed.
 ```
 
 **Request 4**
 ```
 Goal: Define the image classifier model, its loss function, optimizer and accuracy metric.
 Context: an MLP: Flatten, then Linear(784, 300), ReLU, Linear(300, 100), ReLU, Linear(100, 10). Use torch.manual_seed(42) immediately before creating the model. Loss: nn.CrossEntropyLoss(). Optimizer: SGD with lr=0.1. Metric: torchmetrics.Accuracy(task="multiclass", num_classes=10). Pick the fastest available device (CUDA, then MPS, then CPU fallback) and move the model and metric onto it.
-Constraints: save as 04_model.py.
-Done when: it prints the model summary and a total trainable-parameter count.
+Constraints: save as 04_model.py. Commit and push it to the current branch when done.
+Done when: it prints the model summary and a total trainable-parameter count, and the commit is pushed.
 ```
 
 **Request 5**
 ```
 Goal: Write a training function that records training loss, training accuracy, and validation accuracy after every epoch, not just loss.
 Context: for each epoch: iterate the training loader, do the usual forward/backward/step/zero_grad, accumulate the loss and update the accuracy metric; after the epoch, compute and store the mean training loss and training accuracy, then evaluate validation accuracy the same way (a separate no_grad pass over the validation loader). Return a history dict with keys train_losses, train_metrics, valid_metrics, each a list with one entry per epoch.
-Constraints: save as 05_training_function.py. Don't run training yet, just define the function.
-Done when: the file defines the function without executing it.
+Constraints: save as 05_training_function.py. Don't run training yet, just define the function. Commit and push it to the current branch when done.
+Done when: the file defines the function without executing it, and the commit is pushed.
 ```
 
 **Request 6**
 ```
 Goal: Actually run training, for real, for 20 epochs.
 Context: use the function and objects from the previous steps. Keep the returned history -- don't discard it.
-Constraints: save as 06_train.py. Print the final training and validation accuracy.
-Done when: it runs to completion (expect a few minutes on CPU) with no errors, and both final accuracy numbers print.
+Constraints: save as 06_train.py. Print the final training and validation accuracy. Commit and push it to the current branch when done.
+Done when: it runs to completion (expect a few minutes on CPU) with no errors, both final accuracy numbers print, and the commit is pushed.
 ```
 
 **Request 7**
 ```
 Goal: Plot training accuracy across epochs -- this is the one piece of the process that needs to be added on top of a basic training loop.
 Context: use the history dict's train_metrics list (and valid_metrics alongside it, for a fuller learning-curve chart) against epoch number, with matplotlib. Label axes, add a legend and a title.
-Constraints: save as 07_plot_accuracy.py.
-Done when: it produces a chart showing both curves rising and roughly leveling off.
+Constraints: save as 07_plot_accuracy.py. Commit and push it to the current branch when done.
+Done when: it produces a chart showing both curves rising and roughly leveling off, and the commit is pushed.
 ```
 
 **Request 8**
 ```
 Goal: Show the trained model's predictions on a few real examples.
 Context: take 3 images from the validation set, predict their classes, print predicted vs true class names, softmax probabilities, and the top-4 most likely classes per image. Also print the model's total parameter count again for confirmation.
-Constraints: save as 08_evaluate_predictions.py.
-Done when: it runs and the printed predictions look sane (matching or close to the true labels).
+Constraints: save as 08_evaluate_predictions.py. Commit and push it to the current branch when done.
+Done when: it runs and the printed predictions look sane (matching or close to the true labels), and the commit is pushed.
 ```
 
 **Request 9 (wrap-up)**
