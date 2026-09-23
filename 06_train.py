@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 import runpy
 
+import torch
+
 
 if __name__ == "__main__":
     repo_root = Path(__file__).resolve().parent
@@ -23,7 +25,10 @@ if __name__ == "__main__":
 
     history_path = repo_root / "training_history.json"
     history_path.write_text(json.dumps(history, indent=2) + "\n", encoding="utf-8")
+    model_path = repo_root / "fashion_mnist_model.pt"
+    torch.save(components["model"].state_dict(), model_path)
 
     print(f"Final training accuracy: {history['train_metrics'][-1]:.4%}")
     print(f"Final validation accuracy: {history['valid_metrics'][-1]:.4%}")
     print(f"History saved to {history_path.name}")
+    print(f"Model weights saved to {model_path.name}")
